@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>SUPER‑LIFE · HOME</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ---------- style.css – BLACK / RED / WHITE (fully responsive) ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #f0f0f0;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* subtle animated background (red glow) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 40%, rgba(255, 59, 59, 0.03) 0%, transparent 30%),
+                        radial-gradient(circle at 80% 70%, rgba(255, 59, 59, 0.04) 0%, transparent 35%);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        a {
+            color: #ff3b3b;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+        a:hover {
+            color: #fff;
+            text-shadow: 0 0 12px #ff3b3b;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* ----- HEADER (black/red) with glass effect - RESPONSIVE ----- */
+        .main-header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(6px);
+            border-bottom: 3px solid #ff3b3b;
+            padding: 0.8rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 30px rgba(255, 59, 59, 0.25);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            gap: 0.5rem;
+        }
+        .logo {
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #ff3b3b;
+            text-transform: uppercase;
+            background: #000;
+            padding: 0.2rem 0.8rem;
+            border: 2px solid #ff3b3b;
+            transform: skew(-7deg) scale(1);
+            transition: transform 0.2s;
+            box-shadow: 5px 5px 0 rgba(255, 59, 59, 0.4);
+            white-space: nowrap;
+        }
+        .logo:hover {
+            transform: skew(-7deg) scale(1.05);
+            box-shadow: 8px 8px 0 #ff3b3b;
+        }
+        .logo span {
+            color: white;
+            font-weight: 300;
+        }
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: flex-end;
+        }
+        .nav-links a {
+            font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+            padding: 0.3rem 0;
+            border-bottom: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+        .nav-links a i {
+            font-size: 0.9rem;
+            color: #ff3b3b;
+            transition: transform 0.2s;
+        }
+        .nav-links a:hover i {
+            transform: translateY(-2px) scale(1.2);
+        }
+        .nav-links a:hover {
+            border-bottom-color: #ff3b3b;
+        }
+        .nav-links a.active {
+            border-bottom-color: #ff3b3b;
+            color: white;
+        }
+
+        /* ----- HERO SECTION – bold & magnetic (responsive) ----- */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 50vh;
+            text-align: center;
+            position: relative;
+            padding: 1rem 0;
+        }
+
+        .hero-word {
+            font-size: clamp(3rem, 15vw, 9rem);
+            font-weight: 900;
+            color: #ff3b3b;
+            background: #000;
+            padding: 0.2rem 1rem;
+            border: 4px solid #ff3b3b;
+            transform: skew(-5deg) rotate(0.2deg);
+            box-shadow: 15px 15px 0 rgba(255, 59, 59, 0.3), 0 0 30px rgba(255, 59, 59, 0.5);
+            letter-spacing: clamp(2px, 2vw, 8px);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            animation: pulseGlow 3s infinite alternate;
+            position: relative;
+            z-index: 2;
+            width: fit-content;
+            max-width: 95%;
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 12px 12px 0 rgba(255, 59, 59, 0.3), 0 0 30px #ff3b3b; }
+            100% { box-shadow: 20px 20px 0 rgba(255, 59, 59, 0.5), 0 0 60px #ff3b3b; }
+        }
+        .hero-word span {
+            color: white;
+            font-weight: 300;
+            transform: skew(5deg) scale(1.02);
+            display: inline-block;
+            text-shadow: 0 0 15px white;
+        }
+
+        .hero-sub {
+            font-size: clamp(1.2rem, 5vw, 2.2rem);
+            color: #ddd;
+            max-width: 90%;
+            border-left: 4px solid #ff3b3b;
+            padding-left: 1.2rem;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(3px);
+            border-radius: 0 30px 30px 0;
+            margin: 1rem 0 2rem;
+            font-weight: 300;
+            line-height: 1.4;
+        }
+        .hero-sub i {
+            color: #ff3b3b;
+            margin-right: 8px;
+        }
+
+        /* ---------- CREATIVE FLOATING ELEMENTS (fully responsive) ---------- */
+        .creative-section {
+            margin: 3rem 0 4rem;
+            position: relative;
+            width: 100%;
+        }
+
+        .red-thread {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .thread-line {
+            width: 4px;
+            height: clamp(80px, 15vh, 180px);
+            background: linear-gradient(180deg, #ff3b3b, transparent 90%);
+            margin: 5px 0;
+            box-shadow: 0 0 30px #ff3b3b;
+        }
+
+        .floating-super {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            width: 100%;
+        }
+
+        .super-element {
+            background: #111;
+            border: 1px solid #ff3b3b;
+            border-radius: 50% 20% 50% 20%;
+            padding: 1.5rem 1rem;
+            width: clamp(140px, 30vw, 220px);
+            text-align: center;
+            transition: 0.4s;
+            position: relative;
+            animation: float 6s infinite ease-in-out;
+            box-shadow: 0 10px 20px -8px rgba(255, 59, 59, 0.5);
+            flex: 0 1 auto;
+        }
+
+        .super-element:nth-child(2) { animation-delay: 1.2s; }
+        .super-element:nth-child(3) { animation-delay: 2.4s; }
+        .super-element:nth-child(4) { animation-delay: 0.6s; }
+        .super-element:nth-child(5) { animation-delay: 1.8s; }
+        .super-element:nth-child(6) { animation-delay: 3s; }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .super-element:hover {
+            border-color: white;
+            transform: scale(1.05) translateY(-8px);
+            box-shadow: 0 0 30px #ff3b3b;
+            background: #1a1a1a;
+            animation-play-state: paused;
+        }
+
+        .super-element i {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            color: #ff3b3b;
+            margin-bottom: 0.8rem;
+            filter: drop-shadow(0 0 6px red);
+        }
+
+        .super-element h4 {
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            color: white;
+            margin: 0.3rem 0;
+        }
+
+        .super-element p {
+            color: #aaa;
+            font-size: clamp(0.7rem, 2vw, 0.95rem);
+        }
+
+        .super-element .shine {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle at top left, #ff3b3b, transparent 70%);
+            opacity: 0.3;
+        }
+
+        .thread-end {
+            width: clamp(50px, 15vw, 80px);
+            height: clamp(50px, 15vw, 80px);
+            border-radius: 50%;
+            background: #ff3b3b20;
+            border: 2px dashed #ff3b3b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+        .thread-end i {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            color: #ff3b3b;
+        }
+
+        /* lava lamp responsive */
+        .lava-block {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .lava-drop {
+            width: clamp(100px, 25vw, 140px);
+            height: clamp(100px, 25vw, 140px);
+            background: radial-gradient(circle at 30% 30%, #ff3b3b, #300);
+            border-radius: 60% 40% 70% 30%;
+            animation: blob 8s infinite alternate;
+            filter: blur(2px) brightness(1.2);
+            mix-blend-mode: screen;
+            box-shadow: 0 0 50px red;
+        }
+        .lava-drop:nth-child(2) {
+            border-radius: 40% 70% 30% 60%;
+            background: radial-gradient(circle at 70% 20%, #ff5555, #200);
+            animation-delay: -2s;
+            width: clamp(120px, 30vw, 180px);
+            height: clamp(120px, 30vw, 180px);
+        }
+        .lava-drop:nth-child(3) {
+            border-radius: 70% 30% 50% 50%;
+            animation-delay: -4s;
+            width: clamp(90px, 20vw, 120px);
+            height: clamp(90px, 20vw, 120px);
+        }
+
+        @keyframes blob {
+            0% { border-radius: 60% 40% 70% 30%; transform: rotate(0deg) scale(1); }
+            50% { border-radius: 30% 70% 40% 60%; transform: rotate(10deg) scale(1.1); }
+            100% { border-radius: 70% 40% 60% 30%; transform: rotate(0deg) scale(1); }
+        }
+
+        /* moving slogan responsive */
+        .slogan-marquee {
+            background: #111;
+            border: 2px solid #ff3b3b;
+            padding: 1rem;
+            font-size: clamp(1.2rem, 4vw, 2.2rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            color: white;
+            letter-spacing: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            margin: 2rem 0;
+            width: 100%;
+        }
+        .slogan-marquee span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll 14s linear infinite;
+            color: #ff3b3b;
+        }
+        .slogan-marquee span i {
+            color: white;
+            margin: 0 10px;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* quality cards responsive */
+        .quality-grid {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: 3rem 0;
+            width: 100%;
+        }
+
+        .quality-card {
+            background: #0f0f0f;
+            border-left: 6px solid #ff3b3b;
+            padding: 1.5rem;
+            max-width: 100%;
+            width: min(350px, 100%);
+            border-radius: 0 30px 30px 0;
+            transition: 0.3s;
+        }
+        .quality-card:hover {
+            transform: translateX(5px);
+            border-left-width: 10px;
+        }
+        .quality-card i {
+            color: #ff3b3b;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+        }
+        .quality-card p {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            margin-top: 0.5rem;
+        }
+        .quality-card .tag {
+            color: #ff3b3b;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        /* ---------- ATTRACTIVE SOCIAL ICONS SECTION (IG, FB, WhatsApp) ---------- */
+        .social-attractive {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2.5rem;
+            margin: 3rem 0 2rem;
+            flex-wrap: wrap;
+            padding: 1.5rem;
+            background: linear-gradient(145deg, #0f0f0f, #1a1a1a);
+            border-radius: 80px;
+            border: 1px solid #ff3b3b;
+            box-shadow: 0 10px 30px rgba(255, 59, 59, 0.3), inset 0 0 20px rgba(255, 59, 59, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-attractive::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 59, 59, 0.1) 0%, transparent 70%);
+            animation: rotateSocial 15s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotateSocial {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .social-item {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .social-item:hover {
+            transform: translateY(-10px) scale(1.1);
+        }
+
+        .social-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 30% 70% 30% 70% / 60% 40% 60% 40%;
+            background: #111;
+            border: 3px solid #ff3b3b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #ff3b3b;
+            transition: all 0.4s;
+            box-shadow: 0 0 25px rgba(255, 59, 59, 0.5), inset 0 0 15px rgba(255, 59, 59, 0.3);
+            animation: morphIcon 6s infinite ease-in-out;
+        }
+
+        @keyframes morphIcon {
+            0% { border-radius: 30% 70% 30% 70% / 60% 40% 60% 40%; }
+            50% { border-radius: 70% 30% 70% 30% / 40% 60% 40% 60%; }
+            100% { border-radius: 30% 70% 30% 70% / 60% 40% 60% 40%; }
+        }
+
+        .social-item:nth-child(1) .social-icon { animation-delay: 0s; }
+        .social-item:nth-child(2) .social-icon { animation-delay: 1s; }
+        .social-item:nth-child(3) .social-icon { animation-delay: 2s; }
+
+        .social-item:hover .social-icon {
+            background: #ff3b3b;
+            color: #000;
+            border-color: white;
+            box-shadow: 0 0 50px #ff3b3b, 0 0 100px rgba(255, 59, 59, 0.6);
+            transform: rotate(5deg) scale(1.05);
+        }
+
+        .social-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: #000;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            border: 1px solid #ff3b3b;
+            opacity: 0.9;
+            transition: 0.3s;
+        }
+
+        .social-item:hover .social-label {
+            background: #ff3b3b;
+            color: #000;
+            border-color: white;
+            box-shadow: 0 0 20px #ff3b3b;
+        }
+
+        /* WhatsApp number attractive */
+        .whatsapp-number {
+            font-size: 1.2rem;
+            color: #ff3b3b;
+            font-weight: 600;
+            letter-spacing: 1px;
+            background: rgba(0,0,0,0.7);
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            border: 1px dashed #ff3b3b;
+            margin-top: 0.5rem;
+            display: inline-block;
+            transition: 0.3s;
+        }
+        .whatsapp-number:hover {
+            background: #ff3b3b;
+            color: #000;
+            border-color: white;
+        }
+
+        /* footer responsive with dynamic text */
+        .main-footer {
+            background: #0a0a0a;
+            border-top: 2px solid #ff3b3b;
+            text-align: center;
+            padding: 1.5rem 1rem;
+            color: #aaa;
+            margin-top: 2rem;
+            width: 100%;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+        }
+        
+        /* Default footer text (desktop) */
+        .footer-desktop {
+            display: inline-block;
+        }
+        .footer-mobile {
+            display: none;
+        }
+        
+        /* Mobile and small laptop (up to 1024px) */
+        @media (max-width: 1024px) {
+            .footer-desktop {
+                display: none;
+            }
+            .footer-mobile {
+                display: inline-block;
+            }
+            
+            .social-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+            .social-attractive {
+                gap: 1.5rem;
+                padding: 1rem;
+                border-radius: 50px;
+            }
+        }
+
+        /* small phone landscape fixes */
+        @media (max-width: 480px) {
+            .main-header {
+                flex-direction: column;
+                align-items: center;
+                padding: 0.5rem;
+            }
+            .nav-links {
+                justify-content: center;
+                gap: 0.6rem;
+            }
+            .nav-links a {
+                font-size: 0.8rem;
+            }
+            .hero-word {
+                box-shadow: 8px 8px 0 rgba(255, 59, 59, 0.3);
+            }
+            .floating-super {
+                gap: 0.8rem;
+            }
+            .super-element {
+                width: calc(50% - 0.8rem);
+                min-width: 130px;
+            }
+            .social-attractive {
+                flex-direction: column;
+                gap: 1.5rem;
+                border-radius: 40px;
+            }
+            .social-icon {
+                width: 70px;
+                height: 70px;
+            }
+        }
+
+        /* tablet and small laptop adjustments */
+        @media (min-width: 481px) and (max-width: 1024px) {
+            .container {
+                padding: 1.5rem 2rem;
+            }
+            .super-element {
+                width: clamp(160px, 22vw, 200px);
+            }
+        }
+
+        /* ensure no horizontal overflow */
+        img, svg, i {
+            max-width: 100%;
+        }
+
+        /* Quick Navigation */
+        .quick-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0 3rem;
+        }
+
+        .quick-nav a {
+            background: #111;
+            border: 2px solid #ff3b3b;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            transition: 0.3s;
+            min-width: 140px;
+            text-align: center;
+        }
+
+        .quick-nav a:hover {
+            background: #ff3b3b;
+            color: #000;
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">SUPER<span>·LIFE</span></div>
+        <nav class="nav-links">
+            <a href="index.html" class="active"><i class="fas fa-home"></i> HOME</a>
+            <a href="about.html"><i class="fas fa-users"></i> ABOUT</a>
+            <a href="products.html"><i class="fas fa-capsules"></i> PRODUCTS</a>
+            <a href="stories.html"><i class="fas fa-book-open"></i> STORIES</a>
+            <a href="join.html"><i class="fas fa-user-plus"></i> JOIN</a>
+            <a href="contact.html"><i class="fas fa-comment"></i> CONTACT</a>
+            <a href="cart.html"><i class="fas fa-cart-shopping"></i> CART</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- BOLD SUPER-LIFE word (pulsing) -->
+        <div class="hero">
+            <div class="hero-word">
+                SUPER<span>-LIFE</span>
+            </div>
+            <p class="hero-sub">
+                <i class="fas fa-bolt"></i> step into another dimension — feel the power
+            </p>
+        </div>
+
+        <!-- Quick Navigation to all pages -->
+        <div class="quick-nav">
+            <a href="about.html"><i class="fas fa-users"></i> ABOUT</a>
+            <a href="products.html"><i class="fas fa-capsules"></i> PRODUCTS</a>
+            <a href="stories.html"><i class="fas fa-book-open"></i> STORIES</a>
+            <a href="join.html"><i class="fas fa-user-plus"></i> JOIN</a>
+            <a href="contact.html"><i class="fas fa-envelope"></i> CONTACT</a>
+            <a href="cart.html"><i class="fas fa-shopping-cart"></i> CART</a>
+        </div>
+
+        <!-- CREATIVE SECTION (fully responsive) -->
+        <div class="creative-section">
+            <!-- red thread with floating elements -->
+            <div class="red-thread">
+                <div class="thread-line"></div>
+                <div class="thread-end">
+                    <i class="fas fa-infinity"></i>
+                </div>
+            </div>
+
+            <!-- floating spheres / creative cells (representing brand energy) -->
+            <div class="floating-super">
+                <div class="super-element">
+                    <div class="shine"></div>
+                    <i class="fas fa-dna"></i>
+                    <h4>ELITE</h4>
+                    <p>red vitality</p>
+                </div>
+                <div class="super-element">
+                    <div class="shine"></div>
+                    <i class="fas fa-fire"></i>
+                    <h4>IGNITE</h4>
+                    <p>black fusion</p>
+                </div>
+                <div class="super-element">
+                    <div class="shine"></div>
+                    <i class="fas fa-meteor"></i>
+                    <h4>NOVA</h4>
+                    <p>white spark</p>
+                </div>
+                <div class="super-element">
+                    <div class="shine"></div>
+                    <i class="fas fa-skull"></i>
+                    <h4>REBEL</h4>
+                    <p>red shadow</p>
+                </div>
+                <div class="super-element">
+                    <div class="shine"></div>
+                    <i class="fas fa-crown"></i>
+                    <h4>KING</h4>
+                    <p>black blood</p>
+                </div>
+                <div class="super-element">
+                    <div class="shine"></div>
+                    <i class="fas fa-moon"></i>
+                    <h4>PHANTOM</h4>
+                    <p>white noise</p>
+                </div>
+            </div>
+
+            <div class="red-thread" style="margin-top: 0.5rem;">
+                <div class="thread-end">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div class="thread-line" style="height: clamp(50px, 10vh, 100px);"></div>
+            </div>
+
+            <!-- lava lamp experimental (pure creative) -->
+            <div class="lava-block">
+                <div class="lava-drop"></div>
+                <div class="lava-drop"></div>
+                <div class="lava-drop"></div>
+            </div>
+
+            <!-- moving slogan with red/white -->
+            <div class="slogan-marquee">
+                <span>⚡ SUPER·LIFE ⚡ <i class="fas fa-skull"></i> EMBRACE YOUR POTENTIAL <i class="fas fa-bolt"></i> ⚡</span>
+            </div>
+
+            <!-- quality cards (about-us preview) -->
+            <div class="quality-grid">
+                <div class="quality-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>I only offer products I personally trust. Every supplement meets the highest quality standards.</p>
+                    <div class="tag">— quality assurance</div>
+                </div>
+                <div class="quality-card">
+                    <i class="fas fa-clock"></i>
+                    <p>Available Monday to Sunday — personal guidance on your health journey.</p>
+                    <div class="tag">— 24/7 support</div>
+                </div>
+                <div class="quality-card">
+                    <i class="fas fa-users"></i>
+                    <p>Thousands of satisfied customers transformed their health with us.</p>
+                    <div class="tag">— proven results</div>
+                </div>
+            </div>
+
+            <!-- ATTRACTIVE SOCIAL MEDIA SECTION (IG, FB, WhatsApp) -->
+            <div class="social-attractive">
+                <div class="social-item" onclick="window.open('https://instagram.com/@ Kelebogile Moremi', '_blank')">
+                    <div class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <span class="social-label">INSTAGRAM</span>
+                </div>
+                
+                <div class="social-item" onclick="window.open('https://facebook.com/@ kelebogile Moremi', '_blank')">
+                    <div class="social-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <span class="social-label">FACEBOOK</span>
+                </div>
+                
+                <div class="social-item" onclick="window.open('https://wa.me/+27 72 827 9358', '_blank')">
+                    <div class="social-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <span class="social-label">WHATSAPP</span>
+                </div>
+            </div>
+            
+            <!-- WhatsApp number display -->
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <span class="whatsapp-number"><i class="fab fa-whatsapp" style="margin-right: 8px;"></i> +27 72 827 9358</span>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <!-- Desktop version (shown on large screens) -->
+        <span class="footer-desktop"><i class="fas fa-skull" style="color:#ff3b3b;"></i> SUPER‑LIFE embrace your potential.2026 <i class="fas fa-skull" style="color:#ff3b3b;"></i></span>
+        <!-- Mobile & small laptop version (shown on screens up to 1024px) -->
+        <span class="footer-mobile"><i class="fas fa-skull" style="color:#ff3b3b;"></i> SUPERLIFE EMBRACE YOUR POTENTIAL <i class="fas fa-skull" style="color:#ff3b3b;"></i></span>
+        <p style="font-size:0.8rem; margin-top:0.3rem;">IG · FB · WhatsApp +27 72 827 9358</p>
+    </footer>
+</body>
+</html>

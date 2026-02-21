@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>SUPER‑LIFE · CART & TRACKING</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #f0f0f0;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 40%, rgba(255, 59, 59, 0.03) 0%, transparent 30%),
+                        radial-gradient(circle at 80% 70%, rgba(255, 59, 59, 0.04) 0%, transparent 35%);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        a {
+            color: #ff3b3b;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+        a:hover {
+            color: #fff;
+            text-shadow: 0 0 12px #ff3b3b;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* Header styles */
+        .main-header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(6px);
+            border-bottom: 3px solid #ff3b3b;
+            padding: 0.8rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 30px rgba(255, 59, 59, 0.25);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            gap: 0.5rem;
+        }
+        .logo {
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #ff3b3b;
+            text-transform: uppercase;
+            background: #000;
+            padding: 0.2rem 0.8rem;
+            border: 2px solid #ff3b3b;
+            transform: skew(-7deg) scale(1);
+            transition: transform 0.2s;
+            box-shadow: 5px 5px 0 rgba(255, 59, 59, 0.4);
+            white-space: nowrap;
+        }
+        .logo:hover {
+            transform: skew(-7deg) scale(1.05);
+            box-shadow: 8px 8px 0 #ff3b3b;
+        }
+        .logo span {
+            color: white;
+            font-weight: 300;
+        }
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: flex-end;
+        }
+        .nav-links a {
+            font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+            padding: 0.3rem 0;
+            border-bottom: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+        .nav-links a i {
+            font-size: 0.9rem;
+            color: #ff3b3b;
+            transition: transform 0.2s;
+        }
+        .nav-links a:hover i {
+            transform: translateY(-2px) scale(1.2);
+        }
+        .nav-links a:hover {
+            border-bottom-color: #ff3b3b;
+        }
+        .nav-links a.active {
+            border-bottom-color: #ff3b3b;
+            color: white;
+        }
+
+        .page-title {
+            text-align: center;
+            margin: 2rem 0 3rem;
+            position: relative;
+        }
+        .page-title h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            color: #ff3b3b;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-shadow: 5px 5px 0 rgba(255, 59, 59, 0.3), 0 0 30px #ff3b3b;
+        }
+        .page-title h1 i {
+            color: white;
+            margin: 0 15px;
+            font-size: 0.8em;
+        }
+        .page-title::after {
+            content: '';
+            display: block;
+            width: 150px;
+            height: 4px;
+            background: #ff3b3b;
+            margin: 1rem auto 0;
+            box-shadow: 0 0 20px #ff3b3b;
+        }
+
+        /* Cart and Tracking specific styles */
+        .cart-columns {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .checkout-card, .summary-card, .tracking-card {
+            background: #111;
+            border: 2px solid #ff3b3b;
+            padding: 2rem;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+        .checkout-card:hover, .summary-card:hover, .tracking-card:hover {
+            border-color: white;
+            box-shadow: 0 0 30px #ff3b3b;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .card-header i {
+            font-size: 2.5rem;
+            color: #ff3b3b;
+        }
+        .card-header h2 {
+            font-size: 2rem;
+            color: white;
+        }
+        .card-header h2 span {
+            color: #ff3b3b;
+        }
+
+        /* Cart Items Section - FIXED: removed space in class name */
+        .cart-items-container {
+            margin: 2rem 0;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #1a1a1a;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: 0.3s;
+        }
+        .cart-item:hover {
+            border: 1px solid #ff3b3b;
+        }
+
+        .item-image {
+            width: 60px;
+            height: 60px;
+            background: #000;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #ff3b3b;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+        .item-name {
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+        .item-price {  /* FIXED: removed the space that was causing error */
+            color: #ff3b3b;
+        }
+
+        .item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .qty-btn {
+            background: #000;
+            border: 1px solid #ff3b3b;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .qty-btn:hover {
+            background: #ff3b3b;
+            color: black;
+        }
+        .qty-value {
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .remove-item {
+            color: #ff3b3b;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .remove-item:hover {
+            color: white;
+            transform: scale(1.2);
+        }
+
+        /* Order Summary */
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #333;
+        }
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 1rem 0;
+            border-top: 2px solid #ff3b3b;
+            margin-top: 1rem;
+        }
+        .summary-total span:last-child {
+            color: #ff3b3b;
+        }
+
+        /* Order Tracking */
+        .tracking-status {
+            margin: 2rem 0;
+        }
+
+        .status-timeline {
+            position: relative;
+            padding: 1rem 0;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .status-icon {
+            width: 40px;
+            height: 40px;
+            background: #1a1a1a;
+            border: 2px solid #ff3b3b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #ff3b3b;
+            z-index: 2;
+        }
+        .status-icon.completed {
+            background: #ff3b3b;
+            color: black;
+        }
+
+        .status-content {
+            flex: 1;
+        }
+        .status-title {
+            font-weight: 700;
+            color: white;
+        }
+        .status-date {
+            font-size: 0.9rem;
+            color: #888;
+        }
+        .status-desc {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-top: 0.3rem;
+        }
+
+        .status-line {
+            position: absolute;
+            left: 20px;
+            top: 40px;
+            width: 2px;
+            height: calc(100% - 30px);
+            background: linear-gradient(180deg, #ff3b3b, transparent);
+        }
+
+        /* Order Info */
+        .order-info {
+            background: #1a1a1a;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+        .order-info p {
+            margin: 0.5rem 0;
+        }
+        .order-info strong {
+            color: #ff3b3b;
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        .payment-option {
+            flex: 1;
+            min-width: 150px;
+            padding: 1rem;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 10px;
+            cursor: pointer;
+            color: white;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .payment-option.active {
+            border-color: #ff3b3b;
+            background: #ff3b3b20;
+        }
+        .payment-option:hover {
+            border-color: #ff3b3b;
+        }
+
+        /* Customer Form */
+        .customer-info h3 {
+            margin-bottom: 1rem;
+            color: #ff3b3b;
+        }
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .form-row input {
+            flex: 1;
+            min-width: 200px;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            padding: 0.8rem;
+            border-radius: 10px;
+            color: white;
+        }
+        .form-row input:focus {
+            border-color: #ff3b3b;
+            outline: none;
+        }
+
+        /* Bank Details */
+        .bank-details {
+            background: #1a1a1a;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+        .bank-details h3 {
+            color: #ff3b3b;
+            margin-bottom: 1rem;
+        }
+        .bank-details p {
+            margin: 0.5rem 0;
+        }
+        .reference-note {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background: #000;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .reference-note span {
+            color: #ff3b3b;
+            font-weight: 700;
+        }
+
+        /* Guidelines */
+        .guidelines {
+            margin: 2rem 0;
+        }
+        .guidelines h3 {
+            color: #ff3b3b;
+            margin-bottom: 1rem;
+        }
+        .guidelines ol {
+            padding-left: 1.5rem;
+        }
+        .guidelines li {
+            margin: 0.5rem 0;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            margin: 2rem 0;
+        }
+        .upload-box {
+            background: #1a1a1a;
+            border: 3px dashed #ff3b3b;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .upload-box:hover {
+            background: #222;
+            border-color: white;
+        }
+        .upload-box i {
+            font-size: 3rem;
+            color: #ff3b3b;
+        }
+
+        /* Buttons */
+        .whatsapp-btn {
+            background: #ff3b3b;
+            color: black;
+            border: 2px solid white;
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+            margin: 1rem 0;
+        }
+        .whatsapp-btn:hover {
+            background: white;
+            color: #ff3b3b;
+        }
+
+        .track-btn {
+            background: transparent;
+            border: 2px solid #ff3b3b;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-left: 1rem;
+        }
+        .track-btn:hover {
+            background: #ff3b3b;
+            color: black;
+        }
+
+        /* Order History */
+        .order-history {
+            margin: 3rem 0;
+        }
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow-x: auto;
+            display: block;
+        }
+        .history-table th {
+            text-align: left;
+            padding: 1rem;
+            background: #1a1a1a;
+            color: #ff3b3b;
+            border-bottom: 2px solid #ff3b3b;
+        }
+        .history-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #333;
+        }
+        .status-badge {
+            background: #ff3b3b20;
+            color: #ff3b3b;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid #ff3b3b;
+            display: inline-block;
+        }
+
+        .main-footer {
+            background: #0a0a0a;
+            border-top: 2px solid #ff3b3b;
+            text-align: center;
+            padding: 1.5rem 1rem;
+            color: #aaa;
+            margin-top: 2rem;
+            width: 100%;
+        }
+
+        @media (max-width: 1024px) {
+            .cart-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .history-table {
+                font-size: 0.9rem;
+            }
+            .history-table th,
+            .history-table td {
+                padding: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                flex-direction: column;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+            .form-row {
+                flex-direction: column;
+            }
+            .payment-methods {
+                flex-direction: column;
+            }
+            .cart-item {
+                flex-wrap: wrap;
+            }
+            .card-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">SUPER<span>·LIFE</span></div>
+        <nav class="nav-links">
+            <a href="index.html"><i class="fas fa-home"></i> HOME</a>
+            <a href="about.html"><i class="fas fa-users"></i> ABOUT</a>
+            <a href="products.html"><i class="fas fa-capsules"></i> PRODUCTS</a>
+            <a href="stories.html"><i class="fas fa-book-open"></i> STORIES</a>
+            <a href="join.html"><i class="fas fa-user-plus"></i> JOIN</a>
+            <a href="contact.html"><i class="fas fa-comment"></i> CONTACT</a>
+            <a href="cart.html" class="active"><i class="fas fa-cart-shopping"></i> CART</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="page-title">
+            <h1><i class="fas fa-cart-shopping"></i> MY CART & TRACKING <i class="fas fa-cart-shopping"></i></h1>
+        </div>
+
+        <!-- Cart Items and Checkout -->
+        <div class="cart-columns">
+            <!-- Left Column: Cart Items and Checkout Form -->
+            <div class="checkout-card">
+                <div class="card-header">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h2>YOUR <span>CART</span></h2>
+                    <button class="track-btn" onclick="showOrderHistory()"><i class="fas fa-history"></i> VIEW ORDER HISTORY</button>
+                </div>
+
+                <!-- Cart Items -->
+                <div class="cart-items-container" id="cartItems">
+                    <!-- Items will be loaded dynamically via JavaScript -->
+                </div>
+
+                <!-- Payment Method Selection -->
+                <div class="payment-methods">
+                    <button class="payment-option active" onclick="showPaymentMethod('eft')" id="eftBtn">EFT BANK TRANSFER</button>
+                    <button class="payment-option" onclick="showPaymentMethod('whatsapp')" id="waBtn">WHATSAPP ORDER</button>
+                    <button class="payment-option" onclick="showPaymentMethod('card')" id="cardBtn">CARD PAYMENT</button>
+                </div>
+
+                <!-- Customer Information -->
+                <div class="customer-info">
+                    <h3><i class="fas fa-user-circle"></i> DELIVERY INFORMATION</h3>
+                    <div class="form-row">
+                        <input type="text" id="firstName" placeholder="First Name" value="John">
+                        <input type="text" id="lastName" placeholder="Last Name" value="Doe">
+                    </div>
+                    <div class="form-row">
+                        <input type="email" id="email" placeholder="Email" value="john@example.com">
+                        <input type="tel" id="phone" placeholder="Phone" value="+27 12 345 6789">
+                    </div>
+                    <div class="form-row">
+                        <input type="text" id="address" placeholder="Address" value="123 Main St">
+                        <input type="text" id="postal" placeholder="Postal Code" value="2000">
+                    </div>
+                </div>
+
+                <!-- EFT Payment Section -->
+                <div id="eftSection">
+                    <div class="bank-details">
+                        <h3>CAPITEC Bank</h3>
+                        <p><strong>Account Name:</strong> Kelebogile Moremi</p>
+                        <p><strong>Account Number:</strong> +27 72 827 9358</p>
+                        <p><strong>Branch Code:</strong> 470010</p>
+                        <p><strong>Account Type:</strong> Cheque Account</p>
+                        <p class="reference-note">Use <span id="orderRef">ORDER #SL-2026-001</span> as reference</p>
+                        <h3> FNB BANK</h3>
+                        <p><strong>Account Name:</strong> Kelebogile Moremi</p>
+                        <p><strong>Account Number:</strong> +27 72 827 9358</p>
+                        <p><strong>Branch Code:</strong> 250655</p>
+                        <p><strong>Account Type:</strong> Cheque Account</p>
+                        <p class="reference-note">Use <span id="orderRef">ORDER #SL-2026-001</span> as reference</p>
+                    </div>
+
+                    <div class="guidelines">
+                        <h3>HOW TO PAY VIA EFT</h3>
+                        <ol>
+                            <li>Log into your banking app</li>
+                            <li>Add a new beneficiary using the details above</li>
+                            <li>Use your order number as payment reference</li>
+                            <li>Make payment for the exact order total</li>
+                            <li>Upload proof of payment below</li>
+                        </ol>
+                    </div>
+
+                    <div class="upload-section">
+                        <h3>UPLOAD PROOF OF PAYMENT</h3>
+                        <div class="upload-box" onclick="document.getElementById('fileInput').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click to upload screenshot</p>
+                            <input type="file" id="fileInput" style="display:none;" accept="image/*" onchange="handleFileUpload(this)">
+                        </div>
+                        <div id="uploadStatus" style="color:#ff3b3b; margin-top:0.5rem;"></div>
+                    </div>
+
+                    <button class="whatsapp-btn" onclick="processEFTOrder()">
+                        <i class="fas fa-check-circle"></i> CONFIRM PAYMENT & PLACE ORDER
+                    </button>
+                </div>
+
+                <!-- WhatsApp Section -->
+                <div id="whatsappSection" style="display:none;">
+                    <div style="text-align: center; padding: 2rem;">
+                        <i class="fab fa-whatsapp" style="font-size: 4rem; color: #ff3b3b;"></i>
+                        <h3 style="margin: 1rem 0;">ORDER VIA WHATSAPP</h3>
+                        <p style="margin-bottom: 1rem;">Send your order details to:</p>
+                        <h2 style="color: #ff3b3b; margin-bottom: 1rem;">+27 72 827 9358</h2>
+                        <a href="https://wa.me/27123456789?text=Hello%20I%20want%20to%20place%20an%20order%20-%20Order%20%23SL-2026-001" class="whatsapp-btn" target="_blank">
+                            SEND VIA WHATSAPP
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card Payment Section -->
+                <div id="cardSection" style="display:none;">
+                    <div style="text-align: center; padding: 2rem;">
+                        <i class="fas fa-credit-card" style="font-size: 4rem; color: #ff3b3b;"></i>
+                        <h3 style="margin: 1rem 0;">CARD PAYMENT</h3>
+                        <p>Secure payment powered by PayFast</p>
+                        <div style="background: #1a1a1a; padding: 2rem; border-radius: 10px; margin: 1rem 0;">
+                            <div class="form-row">
+                                <input type="text" placeholder="Card Number" value="**** **** **** 4242" disabled>
+                            </div>
+                            <div class="form-row">
+                                <input type="text" placeholder="MM/YY" value="12/25" disabled>
+                                <input type="text" placeholder="CVV" value="***" disabled>
+                            </div>
+                        </div>
+                        <button class="whatsapp-btn" onclick="processCardPayment()">
+                            <i class="fas fa-lock"></i> PAY R<span id="cardTotal">6210</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Order Summary and Tracking -->
+            <div>
+                <!-- Order Summary -->
+                <div class="summary-card" style="margin-bottom: 2rem;">
+                    <div class="card-header">
+                        <i class="fas fa-receipt"></i>
+                        <h2>ORDER <span>SUMMARY</span></h2>
+                    </div>
+                    
+                    <div id="orderSummary">
+                        <!-- Dynamically updated -->
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">R6210</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping:</span>
+                        <span id="shipping">R150</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>TOTAL:</span>
+                        <span id="total">R6360</span>
+                    </div>
+
+                    <div class="order-info">
+                        <p><strong>Order #:</strong> <span id="displayOrderNum">SL-2026-001</span></p>
+                        <p><strong>Date:</strong> <span id="orderDate">2024-02-14</span></p>
+                        <p><strong>Estimated Delivery:</strong> <span id="deliveryDate">2024-02-17</span></p>
+                    </div>
+                </div>
+
+                <!-- Order Tracking -->
+                <div class="tracking-card" id="trackingSection">
+                    <div class="card-header">
+                        <i class="fas fa-truck"></i>
+                        <h2>TRACK <span>ORDER</span></h2>
+                    </div>
+
+                    <div class="tracking-status">
+                        <div class="status-timeline">
+                            <div class="status-line"></div>
+                            
+                            <div class="status-item" id="status1">
+                                <div class="status-icon completed">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="status-content">
+                                    <div class="status-title">Order Placed</div>
+                                    <div class="status-date" id="statusDate1">Today, 10:30 AM</div>
+                                </div>
+                            </div>
+
+                            <div class="status-item" id="status2">
+                                <div class="status-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="status-content">
+                                    <div class="status-title">Payment Confirmed</div>
+                                    <div class="status-date" id="statusDate2">Pending</div>
+                                    <div class="status-desc">Awaiting payment verification</div>
+                                </div>
+                            </div>
+
+                            <div class="status-item" id="status3">
+                                <div class="status-icon">
+                                    <i class="fas fa-box"></i>
+                                </div>
+                                <div class="status-content">
+                                    <div class="status-title">Processing</div>
+                                    <div class="status-date" id="statusDate3">-</div>
+                                </div>
+                            </div>
+
+                            <div class="status-item" id="status4">
+                                <div class="status-icon">
+                                    <i class="fas fa-shipping-fast"></i>
+                                </div>
+                                <div class="status-content">
+                                    <div class="status-title">Shipped</div>
+                                    <div class="status-date" id="statusDate4">-</div>
+                                </div>
+                            </div>
+
+                            <div class="status-item" id="status5">
+                                <div class="status-icon">
+                                    <i class="fas fa-home"></i>
+                                </div>
+                                <div class="status-content">
+                                    <div class="status-title">Delivered</div>
+                                    <div class="status-date" id="statusDate5">-</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="whatsapp-btn" onclick="refreshTracking()">
+                        <i class="fas fa-sync-alt"></i> REFRESH TRACKING
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order History Section (Hidden by default) -->
+        <div id="orderHistory" style="display: none; margin-top: 3rem;">
+            <div class="summary-card">
+                <div class="card-header">
+                    <i class="fas fa-history"></i>
+                    <h2>ORDER <span>HISTORY</span></h2>
+                    <button class="track-btn" onclick="hideOrderHistory()"><i class="fas fa-times"></i> CLOSE</button>
+                </div>
+
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Date</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Tracking</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderHistoryBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <span><i class="fas fa-skull" style="color:#ff3b3b;"></i> SUPER‑LIFE — embrace your potential . 2026 <i class="fas fa-skull" style="color:#ff3b3b;"></i></span>
+    </footer>
+
+    <script>
+        // Cart data
+        let cart = [
+            { id: 1, name: 'STC30', price: 1380, quantity: 1, image: 'fa-capsules' },
+            { id: 2, name: 'SIC/SNC', price: 1495, quantity: 1, image: 'fa-flask' },
+            { id: 3, name: 'SCC+', price: 1610, quantity: 1, image: 'fa-leaf' },
+            { id: 4, name: 'SCT', price: 1725, quantity: 1, image: 'fa-bolt' }
+        ];
+
+        // Order history
+        let orderHistory = [
+            { id: 'SL-2024-001', date: '2024-02-01', items: 'STC30 x2, SIC/SNC x1', total: 4255, status: 'Delivered', tracking: 'Delivered on 2024-02-05' },
+            { id: 'SL-2024-002', date: '2024-02-10', items: 'SCC+ x3, SCT x2', total: 8280, status: 'Shipped', tracking: 'In transit - ETA 2024-02-15' }
+        ];
+
+        // Current order
+        let currentOrder = {
+            id: 'SL-2026-001',
+            date: new Date().toLocaleDateString(),
+            status: 'Order Placed',
+            paymentStatus: 'Pending'
+        };
+
+        // Load cart on page load
+        window.onload = function() {
+            displayCart();
+            updateOrderSummary();
+            updateTracking();
+            updateOrderHistory();
+            generateOrderNumber();
+        };
+
+        // Display cart items
+        function displayCart() {
+            const cartContainer = document.getElementById('cartItems');
+            if (!cartContainer) return;
+            
+            let html = '';
+            
+            if (cart.length === 0) {
+                html = '<p style="text-align: center; padding: 2rem;">Your cart is empty</p>';
+            } else {
+                cart.forEach((item) => {
+                    html += `
+                        <div class="cart-item" id="item-${item.id}">
+                            <div class="item-image">
+                                <i class="fas ${item.image}"></i>
+                            </div>
+                            <div class="item-details">
+                                <div class="item-name">${item.name}</div>
+                                <div class="item-price">R${item.price}</div>
+                            </div>
+                            <div class="item-quantity">
+                                <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                                <span class="qty-value">${item.quantity}</span>
+                                <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                            </div>
+                            <div class="remove-item" onclick="removeItem(${item.id})">
+                                <i class="fas fa-trash"></i>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            cartContainer.innerHTML = html;
+        }
+
+        // Update quantity
+        function updateQuantity(id, change) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.quantity = Math.max(1, item.quantity + change);
+                displayCart();
+                updateOrderSummary();
+            }
+        }
+
+        // Remove item
+        function removeItem(id) {
+            cart = cart.filter(i => i.id !== id);
+            displayCart();
+            updateOrderSummary();
+        }
+
+        // Update order summary
+        function updateOrderSummary() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = 150;
+            const total = subtotal + shipping;
+            
+            const subtotalEl = document.getElementById('subtotal');
+            const totalEl = document.getElementById('total');
+            const cardTotalEl = document.getElementById('cardTotal');
+            
+            if (subtotalEl) subtotalEl.textContent = `R${subtotal}`;
+            if (totalEl) totalEl.textContent = `R${total}`;
+            if (cardTotalEl) cardTotalEl.textContent = total;
+            
+            // Update order summary display
+            let summaryHtml = '';
+            cart.forEach(item => {
+                summaryHtml += `
+                    <div class="summary-row">
+                        <span>${item.name} x${item.quantity}</span>
+                        <span>R${item.price * item.quantity}</span>
+                    </div>
+                `;
+            });
+            
+            const orderSummary = document.getElementById('orderSummary');
+            if (orderSummary) orderSummary.innerHTML = summaryHtml;
+        }
+
+        // Generate order number
+        function generateOrderNumber() {
+            const date = new Date();
+            const year = date.getFullYear();
+            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            currentOrder.id = `SL-${year}-${random}`;
+            
+            const displayOrderNum = document.getElementById('displayOrderNum');
+            const orderRef = document.getElementById('orderRef');
+            
+            if (displayOrderNum) displayOrderNum.textContent = currentOrder.id;
+            if (orderRef) orderRef.textContent = `ORDER #${currentOrder.id}`;
+            
+            // Set dates
+            const today = new Date();
+            const orderDate = document.getElementById('orderDate');
+            if (orderDate) orderDate.textContent = today.toLocaleDateString();
+            
+            const delivery = new Date();
+            delivery.setDate(delivery.getDate() + 3);
+            const deliveryDate = document.getElementById('deliveryDate');
+            if (deliveryDate) deliveryDate.textContent = delivery.toLocaleDateString();
+        }
+
+        // Show/hide payment methods
+        function showPaymentMethod(method) {
+            const eftBtn = document.getElementById('eftBtn');
+            const waBtn = document.getElementById('waBtn');
+            const cardBtn = document.getElementById('cardBtn');
+            const eftSection = document.getElementById('eftSection');
+            const whatsappSection = document.getElementById('whatsappSection');
+            const cardSection = document.getElementById('cardSection');
+            
+            if (eftBtn) eftBtn.classList.remove('active');
+            if (waBtn) waBtn.classList.remove('active');
+            if (cardBtn) cardBtn.classList.remove('active');
+            
+            if (eftSection) eftSection.style.display = 'none';
+            if (whatsappSection) whatsappSection.style.display = 'none';
+            if (cardSection) cardSection.style.display = 'none';
+            
+            if (method === 'eft') {
+                if (eftBtn) eftBtn.classList.add('active');
+                if (eftSection) eftSection.style.display = 'block';
+            } else if (method === 'whatsapp') {
+                if (waBtn) waBtn.classList.add('active');
+                if (whatsappSection) whatsappSection.style.display = 'block';
+            } else {
+                if (cardBtn) cardBtn.classList.add('active');
+                if (cardSection) cardSection.style.display = 'block';
+            }
+        }
+
+        // Handle file upload
+        function handleFileUpload(input) {
+            const uploadStatus = document.getElementById('uploadStatus');
+            if (input.files.length > 0 && uploadStatus) {
+                uploadStatus.innerHTML = 
+                    `<i class="fas fa-check-circle"></i> Uploaded: ${input.files[0].name}`;
+            }
+        }
+
+        // Process EFT order
+        function processEFTOrder() {
+            const firstName = document.getElementById('firstName');
+            const lastName = document.getElementById('lastName');
+            
+            const firstNameVal = firstName ? firstName.value : 'Customer';
+            const lastNameVal = lastName ? lastName.value : '';
+            
+            // Update order status
+            currentOrder.status = 'Payment Pending';
+            currentOrder.paymentStatus = 'Awaiting Verification';
+            
+            // Add to order history
+            orderHistory.push({
+                id: currentOrder.id,
+                date: new Date().toLocaleDateString(),
+                items: cart.map(i => `${i.name} x${i.quantity}`).join(', '),
+                total: cart.reduce((sum, i) => sum + (i.price * i.quantity), 0) + 150,
+                status: 'Payment Pending',
+                tracking: 'Awaiting payment verification'
+            });
+            
+            updateTracking();
+            updateOrderHistory();
+            
+            alert(`✅ Order placed!\n\nOrder #: ${currentOrder.id}\nThank you ${firstNameVal} ${lastNameVal}!\nWe'll verify your payment and update tracking.`);
+        }
+
+        // Process card payment
+        function processCardPayment() {
+            const firstName = document.getElementById('firstName');
+            const firstNameVal = firstName ? firstName.value : 'Customer';
+            
+            // Update order status
+            currentOrder.status = 'Processing';
+            currentOrder.paymentStatus = 'Paid';
+            
+            // Update tracking
+            const statusDate2 = document.getElementById('statusDate2');
+            const statusIcon2 = document.querySelector('#status2 .status-icon');
+            
+            if (statusDate2) statusDate2.innerHTML = new Date().toLocaleString();
+            if (statusIcon2) {
+                statusIcon2.classList.add('completed');
+                statusIcon2.innerHTML = '<i class="fas fa-check"></i>';
+            }
+            
+            const statusIcon3 = document.querySelector('#status3 .status-icon');
+            if (statusIcon3) statusIcon3.classList.add('completed');
+            
+            // Add to order history
+            orderHistory.push({
+                id: currentOrder.id,
+                date: new Date().toLocaleDateString(),
+                items: cart.map(i => `${i.name} x${i.quantity}`).join(', '),
+                total: cart.reduce((sum, i) => sum + (i.price * i.quantity), 0) + 150,
+                status: 'Processing',
+                tracking: 'Order is being prepared'
+            });
+            
+            updateTracking();
+            updateOrderHistory();
+            
+            alert(`✅ Payment successful!\n\nOrder #: ${currentOrder.id}\nThank you ${firstNameVal}!\nYou can track your order below.`);
+        }
+
+        // Update tracking
+        function updateTracking() {
+            const statusDate2 = document.getElementById('statusDate2');
+            const statusIcons = document.querySelectorAll('.status-icon');
+            
+            if (currentOrder.paymentStatus === 'Paid' && statusDate2) {
+                statusDate2.innerHTML = new Date().toLocaleString();
+                if (statusIcons[1]) {
+                    statusIcons[1].classList.add('completed');
+                    statusIcons[1].innerHTML = '<i class="fas fa-check"></i>';
+                }
+            }
+        }
+
+        // Refresh tracking (simulate progress)
+        function refreshTracking() {
+            const statuses = ['Order Placed', 'Payment Confirmed', 'Processing', 'Shipped', 'Delivered'];
+            const currentIndex = statuses.indexOf(currentOrder.status);
+            
+            if (currentIndex < 4) {
+                currentOrder.status = statuses[currentIndex + 1];
+                
+                // Update icons
+                for (let i = 0; i <= currentIndex + 1; i++) {
+                    const statusItem = document.getElementById(`status${i+1}`);
+                    if (statusItem) {
+                        const icon = statusItem.querySelector('.status-icon');
+                        if (icon) {
+                            icon.classList.add('completed');
+                            icon.innerHTML = '<i class="fas fa-check"></i>';
+                        }
+                        
+                        const dateElement = document.getElementById(`statusDate${i+1}`);
+                        if (dateElement && i === currentIndex + 1) {
+                            dateElement.innerHTML = new Date().toLocaleString();
+                        }
+                    }
+                }
+            }
+            
+            alert(`Tracking updated: ${currentOrder.status}`);
+        }
+
+        // Show order history
+        function showOrderHistory() {
+            const orderHistoryDiv = document.getElementById('orderHistory');
+            if (orderHistoryDiv) {
+                orderHistoryDiv.style.display = 'block';
+            }
+        }
+
+        // Hide order history
+        function hideOrderHistory() {
+            const orderHistoryDiv = document.getElementById('orderHistory');
+            if (orderHistoryDiv) {
+                orderHistoryDiv.style.display = 'none';
+            }
+        }
+
+        // Update order history table
+        function updateOrderHistory() {
+            const tbody = document.getElementById('orderHistoryBody');
+            if (!tbody) return;
+            
+            let html = '';
+            
+            if (orderHistory.length === 0) {
+                html = '<tr><td colspan="6" style="text-align: center; padding: 2rem;">No order history</td></tr>';
+            } else {
+                orderHistory.forEach(order => {
+                    html += `
+                        <tr>
+                            <td><strong>${order.id}</strong></td>
+                            <td>${order.date}</td>
+                            <td>${order.items}</td>
+                            <td>R${order.total}</td>
+                            <td><span class="status-badge">${order.status}</span></td>
+                            <td>${order.tracking}</td>
+                        </tr>
+                    `;
+                });
+            }
+            
+            tbody.innerHTML = html;
+        }
+
+        // Add item to cart (called from products page)
+        function addToCart(productId, name, price, image) {
+            const existing = cart.find(i => i.id === productId);
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: name,
+                    price: price,
+                    quantity: 1,
+                    image: image || 'fa-capsules'
+                });
+            }
+            displayCart();
+            updateOrderSummary();
+            alert(`${name} added to cart!`);
+        }
+    </script>
+</body>
+</html>
